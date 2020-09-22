@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200922;161353397414551">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+	<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380">
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>3.2. Brisanje
+LUKS Particije</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Nakon što smo
+kreirali LUKS particiju I uspješno je mountali sad je možemo I
+brisati na način:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Provjeravamo status
+LUKS diska/particije</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup status secret</P>
+			<P>/dev/mapper/secret is active and is in use.</P>
+			<P>  type:    LUKS1</P>
+			<P>  cipher:  aes-xts-plain64</P>
+			<P>  keysize: 512 bits</P>
+			<P>  key location: dm-crypt</P>
+			<P>  device:  /dev/mapper/vg_luks-lv_luks</P>
+			<P>  sector size:  512</P>
+			<P>  offset:  4096 sectors</P>
+			<P>  size:    2084864 sectors</P>
+			<P>  mode:    read/write</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>umount </B>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">umount direktorij na
+način da umountamo  mount točku imena /secret</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># umount /mnt/secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ili 
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">umount LUKS
+enkriptirani file system prema LUKS imenu</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>umount /dev/mapper/secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">Brišemo
+	/etc/fstab zapis – vezan za LUKS 
+	</P>
+	<P STYLE="margin-bottom: 0in; line-height: 100%"></P>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">Brišemo 
+	brišemo  sadržaj file – a /etc/crypttab.</P>
+	<P STYLE="margin-bottom: 0in; line-height: 100%"></P>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">Brišemo
+	postojeće ključeve iz particije ili diska:</P>
+</UL>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup  luksRemoveKey /dev/vg_luks/lv_luks</P>
+			<P><BR>
+			</P>
+			<P>Enter passphrase to be deleted: <SPAN STYLE="text-decoration: none"><B>Unesite
+			zaporku ovdje</B></SPAN></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Zaustavljamo LUKS
+uređaj</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksClose secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Brišemo LUKS uređaj</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@peric ~]# cryptsetup remove /dev/mapper/secret</P>
+			<P><BR>
+			</P>
+			<P>Device /dev/mapper/secret is not active</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sljedeći korak je
+brisanje: LV</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># lvremove /dev/vg_luks/lv_luks</P>
+			<P><BR>
+			</P>
+			<P>Do you really want to remove active logical volume
+			vg_luks/lv_luks? [y/n]: <B>y</B></P>
+			<P>  Logical volume &quot;lv_luks&quot; successfully removed</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Zatim brišemo: VG</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># vgremove /dev/vg_luks</P>
+			<P><BR>
+			</P>
+			<P>  Volume group &quot;vg_luks&quot; successfully removed</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Zatim brišemo: PV</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># pvremove /dev/sdc1</P>
+			<P><BR>
+			</P>
+			<P>  Labels on physical volume &quot;/dev/sdb1&quot; successfully
+			wiped.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ako želimo USB
+restartirati / brisati sve LVM zapise :</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">wipe LVM iz
+particije/diska</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># wipefs -a /dev/sdc1</P>
+			<P># wipefs -a /dev/sdc</P>
+			<P>/dev/sdb: 2 bytes were erased at offset 0x000001fe (dos): 55 aa</P>
+			<P>/dev/sdb: calling ioctl to re-read partition table: Success</P>
+			<P><BR>
+			</P>
+			<P># partprobe</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Zatim pomoću
+disk-utility fdisk brišemo particiju (ovo nije prikazano – mora se
+znati). 
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ako više ne želimo
+za u buduće koristiti etc/luks-leys/… možemo izbrisat file – e
+ili cijeli direktorij</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># rm -rf /etc/luks-keys</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="krei_nov_klj.html">Prethodna</a> | <a href=".html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>

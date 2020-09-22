@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200922;160721643785012">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+
+	<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380">
+
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>3.1.2. Kreiranje
+Novog Ključa</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Provjeravamo koliko  key slotov – a  smo zauzeli</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@peric ~]# cryptsetup luksDump /dev/vg_luks/lv_luks</P>
+			<P>LUKS header information for /dev/vg_luks/lv_luks</P>
+			<P><BR>
+			</P>
+			<P>Version:       	1</P>
+			<P>Cipher name:   	aes</P>
+			<P>Cipher mode:   	xts-plain64</P>
+			<P>Hash spec:     	sha256</P>
+			<P>Payload offset:	4096</P>
+			<P>MK bits:       	512</P>
+			<P>MK digest:     	49 c6 e2 92 5b 9d ca fd b8 c2 08 7e f2 80 9e c2
+			37 28 c7 2d 
+			</P>
+			<P>MK salt:       	c5 cd 41 30 f8 cb ba 4f 38 cf bd 13 70 51 e9 8e
+						</P>
+			<P>               	80 d9 6a 42 e9 bb 45 6d 14 7c 9b 45 3a c8 85 6b
+						</P>
+			<P>MK iterations: 	83062</P>
+			<P>UUID:          	272fd2d3-5303-426b-9ca9-d7c9038aa0e4</P>
+			<P><BR>
+			</P>
+			<P>Key Slot 0: ENABLED</P>
+			<P>	Iterations:         	1327310</P>
+			<P>	Salt:               	69 2c fc bc c5 2a 8a cc 97 97 af e6 cd 19
+			39 21 
+			</P>
+			<P>	                      	5f d9 1a 9e f7 b4 e1 7f bd a8 d9 b6 df
+			38 b9 0e 
+			</P>
+			<P>	Key material offset:	8</P>
+			<P>	AF stripes:            	4000</P>
+			<P>Key Slot 1: ENABLED</P>
+			<P>	Iterations:         	1309082</P>
+			<P>	Salt:               	e5 78 e9 33 e0 89 6e ca b0 16 c9 06 2c 4c
+			e2 f5 
+			</P>
+			<P>	                      	dd 2e a9 57 03 1d 56 07 09 dd 0d eb 3a
+			a7 5d b7 
+			</P>
+			<P>	Key material offset:	512</P>
+			<P>	AF stripes:            	4000</P>
+			<P>Key Slot 2: DISABLED</P>
+			<P>Key Slot 3: DISABLED</P>
+			<P>Key Slot 4: DISABLED</P>
+			<P>Key Slot 5: DISABLED</P>
+			<P>Key Slot 6: DISABLED</P>
+			<P>Key Slot 7: DISABLED</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Vidimo da su 0 &amp; 1 key slot popunjeni. Ovdje nećemo dodavati
+random key, već će zaporka biti “<A HREF="mailto:ime@prezime">ime@prezime</A>”.
+Dodajemo unutar kreiranog direktorija /etc/luks-keys novi file imena 
+“key1”.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># vim /etc/luks-keys/key1</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sa sadržajem 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>“vaše_ime”@”vaše_prezime”</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Dodajemo ključ</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksAddKey /dev/vg_luks/lv_luks
+			/etc/luks-keys/key1</P>
+			<P>Enter any existing passphrase: 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+SELinux</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># restorecon -vvRF /etc/luks-keys</P>
+			<P>Relabeled /etc/luks-keys/key1 from
+			unconfined_u:object_r:etc_t:s0 to system_u:object_r:etc_t:s0</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Testiranje:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># umount /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P># cryptsetup -v luksClose secret</P>
+			<P>Command successful.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Otključavanje</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup -v luksOpen /dev/vg_luks/lv_luks secret
+			--key-file=/etc/luks-keys/key1</P>
+			<P><BR>
+			</P>
+			<P>Key slot 2 unlocked.</P>
+			<P>Command successful.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Uspješno. Sad možemo mount file-system</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mount -v /dev/mapper/secret /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P>mount: /dev/mapper/secret mounted on /mnt/secret.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ovaj novo kreirani ključ možemo dodati u postojeći direktoriy
+/etc/luks-keys (već imamo ključ imena mybackup_key)</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I možemo go dodati u file /etc/crypttab sa postojećim ključem I
+pomoću njega sposobni smo otključati LUKS particiju</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>secret UUID=272fd2d3-5303-426b-9ca9-d7c9038aa0e4
+			/etc/luks-keys/key1 luks</P>
+			<P>secret UUID=272fd2d3-5303-426b-9ca9-d7c9038aa0e4
+			/etc/luks-keys/mybackup_key luks</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+(Ovaj ključ može imati I drugu lokaciju, I tada kad ga dodajemo
+upišemo novu lokaciju)</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+npr.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksAddKey /dev/vg_luks/lv_luks
+			/put/do/nove/lokacijekey1</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="krei_luks_klj_1.html">Prethodna</a> | <a href="bri_luks_par.html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>
