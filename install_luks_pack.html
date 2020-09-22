@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200922;122845003636990">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+	-->
+	</STYLE>
+</HEAD>
+
+<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+    	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380">	
+
+
+
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>2. Instalacija
+LUKS </B><B>P</B><B>aketa</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Na radnoj stanici
+koja će se koristiti vršimo instalaciju crypt paketa.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Instalacije se vrši
+sa naredbom:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"> CentOS 7:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>yum -y install cryptsetup</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">CentOS 8:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>dnf -y install cryptsetup</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>Važno:</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">LUKS formatiranje
+briše sav sadržaj na disku I tu trebamo biti oprezni kad koristimo
+LUKS. Kreiranje LUKS diskova/particija se može  raditi I na  VM 
+(Virtual Machine ) kao I na  stvarnoj radnoj stanici.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Aktiviramo LUKS
+modul</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>modprobe dm_crypt</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Provjeravam da li je
+modul pokrenut</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@server ~]# lsmod | grep dm_crypt</P>
+			<P><SPAN STYLE="background: #ff0000">dm_crypt </SPAN>             
+			27346  0 
+			</P>
+			<P>dm_mod                124461  17 dm_log,dm_mirror,<SPAN STYLE="background: #ff0000">dm_crypt</SPAN></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="LUKS_disk_enkripcija.html">Prethodna</a> | <a href="krei_luks_part.html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>

@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200922;125810603649150">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+	-->
+	</STYLE>
+</HEAD>
+<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380">
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>3.1.1. Kreiranje
+LUKS Ključa</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sljedeći korak je
+dodavanje ključa za automount</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Automatsko mountanje
+LUKS enkriptiranog file-system ima sigurnosne implikacije. Za laptop
+korisnike, ovaj način nije preporučljiv, ali ćemo ga objasniti.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Kreiramo direktorij 
+I file koji će sadržavati ključeve (ja sam izabrao
+/etc/luks-keys):</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mkdir /etc/luks-keys</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Nasumično ću
+kreirat ključ sa naredbom:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># dd if=/dev/random of=/etc/luks-keys/mybackup_key bs=32
+			count=1</P>
+			<P><BR>
+			</P>
+			<P>1+0 records in</P>
+			<P>1+0 records out</P>
+			<P>32 bytes copied, 0.000130132 s, 246 kB/s</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Njegov sadržaj
+izgleda meni ovako:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>÷k=TéÉÂ^Wø°b^D?¿&gt;òQf®?N&lt;89&gt;|&lt;Ù^OøUµ^_îm</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ovakav izabir je
+preporučljiv  al može se I izabrati neki lakše pamtljiv ključ.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Dodajemo ključ
+koristeći cryptsetup utility</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksAddKey /dev/vg_luks/lv_luks
+			/etc/luks-keys/mybackup_key</P>
+			<P><BR>
+			</P>
+			<P>Enter any existing passphrase: 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Restore SELinux
+context</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># restorecon -vvRF /etc/luks-keys</P>
+			<P><BR>
+			</P>
+			<P>Relabeled /etc/luks-keys from unconfined_u:object_r:etc_t:s0 to
+			system_u:object_r:etc_t:s0</P>
+			<P>Relabeled /etc/luks-keys/mybackup_key from
+			unconfined_u:object_r:etc_t:s0 to system_u:object_r:etc_t:s0</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Na ovaj način smo
+dodali ključ.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Prvi put smo
+otključali enkriptirani file-system I mountali  ručno. Sad možemo
+provjeriti da li je to moguće sa automount. Budući da je
+file-system već mountan odmountamo ga.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># umount /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P># cryptsetup -v luksClose secret</P>
+			<P><BR>
+			</P>
+			<P>Command successful.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sad ćemo pokušati
+otvoriti enkriptiranu particiju putem komandne linije koristeći file
+kao ključ.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>#  cryptsetup -v luksOpen /dev/vg_luks/lv_luks secret \</P>
+			<P>&gt; --key-file=/etc/luks-keys/mybackup_key</P>
+			<P><BR>
+			</P>
+			<P>Key slot 1 unlocked.</P>
+			<P>Command successful.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Uspješno smo
+otvorili enkriptiranu particiju I sad izmjenjujemo dva file-a</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">/etc/crypttab</P>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">/etc/fstab file
+		</P>
+</UL>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">da bi uspješno
+mountali file-system nakon reboot -a.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Dohvaćamo  UUID 
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># blkid /dev/vg_luks/lv_luks</P>
+			<P><BR>
+			</P>
+			<P>/dev/vg_luks/lv_luks:
+			UUID=&quot;89ba8af5-6ad6-4b71-b65f-80d0bd57495f&quot;
+			TYPE=&quot;crypto_LUKS&quot;</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Izmjena file – a.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">/etc/crypttab 
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">NAPOMENA: u
+/etc/crypttab file – u koristimo UUID od paticije, u ovome slučaju
+UUID Volume Group &amp; Logical Volume    
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>secret UUID=89ba8af5-6ad6-4b71-b65f-80d0bd57495f
+			/etc/luks-keys/mybackup_key luks</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">/etc/fstab 
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">NAPOMENA: u
+/etc/fstab file – u koristimo /dev/mapper</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>/dev/mapper/secret /mnt/secret xfs defaults 0 0</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Preporučena naredba
+kod izmjene /<SPAN STYLE="font-style: normal">etc/fstab file-a </SPAN>
+:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@peric mnt]# mount -av</P>
+			<P>/                        : ignored</P>
+			<P>/boot                    : already mounted</P>
+			<P>swap                     : ignored</P>
+			<P>/mnt/secret              : successfully mounted</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I sad možemo reboot sustav. Ako je sve u redu, nakon što se sustav
+podigne naša LUKS particija će biti učitana u direktorij:
+/mnt/secret, pomoću ključa koji se nalazi u
+/etc/luks-keys/mybackpu_key.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="krei_luks_par_1.html">Prethodna</a> | <a href=".html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>

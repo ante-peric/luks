@@ -1,0 +1,645 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200922;124848370816747">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+	-->
+	</STYLE>
+</HEAD>
+<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+    	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380">
+    
+    
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>3.1. Kreiranje
+LUKS  particije – Primjer 1 </B>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sad počinjemo sa
+kreiranjem LUKS enkriptirane particije na USB uređaju, isto tako se
+može koristiti bilo koji HDD , SDD , SD ili virtualni diskovi.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Prikaz našeg USB –
+a</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>sdc                                8:32   1   1.9G  0 disk  
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ovdje će se
+kreirati :</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<UL>
+				<LI><P>Particija koja je tipa LVM</P>
+			</UL>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<UL>
+				<LI><P>/etc/crypttab file će sadržavati lokaciju do ključeva</P>
+			</UL>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<UL>
+				<LI><P>file koji će imati zapisane ključeve</P>
+			</UL>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Kad se restartira
+sustav automatski će se mountat naš USB I otkljčavati</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Kad se restartira
+sustav automatski će se mountat naš USB I otkljčavati</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P ALIGN=CENTER><B>Kreiramo LVM – gdje moramo proći sve korake
+			za kreiranje LVM:</B></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<P STYLE="margin-bottom: 0in"><BR>
+			</P>
+			<UL>
+				<LI><P STYLE="margin-bottom: 0in">Kreiramo particiju  <SPAN STYLE="font-weight: normal">/dev/</SPAN><SPAN STYLE="font-weight: normal">sdc1</SPAN>,
+				 veličine 1024M, tipa LVM – 8e</P>
+			</UL>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<UL>
+				<LI><P>partprobe</P>
+			</UL>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<UL>
+				<LI><P STYLE="margin-bottom: 0in">Kreiramo PV <SPAN STYLE="font-style: normal">/</SPAN><SPAN STYLE="font-style: normal">dev/sdb1</SPAN></P>
+			</UL>
+			<P STYLE="margin-bottom: 0in; font-style: normal"><BR>
+			</P>
+			<P STYLE="margin-bottom: 0in; font-style: normal"># pvcreate
+			/dev/sdc1</P>
+			<P STYLE="margin-bottom: 0in; font-style: normal">  Physical
+			volume &quot;/dev/sdc1&quot; successfully created.</P>
+			<P STYLE="font-style: normal"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<UL>
+				<LI><P STYLE="margin-bottom: 0in; font-weight: normal">Kreiramo
+				VG imena “vg_luks” I pridružujemo /dev/sdb1</P>
+			</UL>
+			<P STYLE="margin-bottom: 0in"><BR>
+			</P>
+			<P STYLE="margin-bottom: 0in"># vgcreate /dev/vg_luks /dev/sdc1</P>
+			<P STYLE="margin-bottom: 0in">  Volume group &quot;vg_luks&quot;
+			successfully created</P>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<UL>
+				<LI><P STYLE="margin-bottom: 0in">Kreiramo LV imena “lv_luks”,
+				 član vg_luks,  veličine 1024M – 100%FREE</P>
+			</UL>
+			<P STYLE="margin-bottom: 0in"><BR>
+			</P>
+			<P STYLE="margin-bottom: 0in"># lvcreate -l 100%FREE --name
+			lv_luks /dev/vg_luks</P>
+			<P>  Logical volume &quot;lv_luks&quot; created. 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR<
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sljedeći korak je
+pretvorba novo - kreiranog Logical Volume u LUKS format</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+
+<P STYLE="margin-bottom: 0in; line-height: 100%">Naredbe :</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=665 CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=453>
+	<COL WIDTH=194>
+	<TR VALIGN=TOP>
+		<TD WIDTH=453 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P><BR>
+			</P>
+			<P>cryptsetup luksFormat /dev/vg_luks/lv_luks</P>
+			<P>  
+			</P>
+		</TD>
+		<TD WIDTH=194 STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P><BR>
+			</P>
+			<P>Kreira luks tipa luks2 na CentOS 8</P>
+			<P><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=453 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P STYLE="margin-bottom: 0in"><BR>
+			</P>
+			<P STYLE="margin-bottom: 0in"> cryptsetup luksFormat --type luks1
+			/dev/vg_luks/lv_luks</P>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=194 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<P><BR>
+			</P>
+			<P>Kreira luks tipa luks1</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Mi koristimo CentOS
+8  I kreirat ćemo luks1 tip sa dvije zastavice zbog lakšeg
+razumjevanja:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">-y 
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+-v</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@peric ~]# cryptsetup -y -v  --type luks1  luksFormat
+			/dev/vg_luks/lv_luks 
+			</P>
+			<P><BR>
+			</P>
+			<P>WARNING!</P>
+			<P>========</P>
+			<P>This will overwrite data on /dev/vg_luks/lv_luks irrevocably.</P>
+			<P><BR>
+			</P>
+			<P>Are you sure? (Type uppercase yes): <B>YES</B></P>
+			<P>Enter passphrase for /dev/vg_luks/lv_luks: <B>Unesite zaporku
+			ovdje - Enter</B></P>
+			<P>Verify passphrase: <B>Ponovite zaporku ovdje - Enter</B></P>
+			<P>Key slot 0 created.</P>
+			<P>Command successful.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ovdje vidimo “Key slot 0 created.” što znači da smo jedan od
+dosupnih key-slotova  popunili sa kreiranom passphrase.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ovdje vidimo “Key
+slot 0 created.” što znači da smo jedan od dosupnih key-slotova 
+popunili sa kreiranom passphrase.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sljedeći korak je 
+kreiranje mete koja služi za:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%">otvaranje, 
+	</P>
+	<P STYLE="margin-bottom: 0in; line-height: 100%"></P>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%"> imenovanje
+	LUKS Logical Volume, 
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+nazvat ćemo ga <B>secret</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% HEIGHT=56 VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P STYLE="text-decoration: none"># cryptsetup -v luksOpen
+			/dev/vg_luks/lv_luks secret</P>
+			<P STYLE="text-decoration: none"><BR>
+			</P>
+			<P STYLE="text-decoration: none">Enter passphrase for
+			/dev/vg_luks/lv_luks:<B>Unesite zaporku koju smo kreirali ovdje</B><B>
+			</B>
+			</P>
+			<P STYLE="text-decoration: none">Key slot 0 unlocked.</P>
+			<P STYLE="text-decoration: none">Command successful.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">LUKS ime = secret</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Provjera statusa:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup status secret</P>
+			<P><BR>
+			</P>
+			<P>/dev/mapper/secret is active.</P>
+			<P>  type:    LUKS2</P>
+			<P>  cipher:  aes-xts-plain64</P>
+			<P>  keysize: 512 bits</P>
+			<P>  key location: keyring</P>
+			<P>  device:  /dev/mapper/vg_luks-lv_luks</P>
+			<P>  sector size:  512</P>
+			<P>  offset:  32768 sectors</P>
+			<P>  size:    3850240 sectors</P>
+			<P>  mode:    read/write</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Sad možemo
+provjeriti I sa naredbom “lsblk”</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>…</P>
+			<P><FONT SIZE=3 STYLE="font-size: 13pt">sdc                       
+			              8:32     1   1.9G  0   disk  </FONT>
+			</P>
+			<P>└─<FONT SIZE=3 STYLE="font-size: 13pt">sdc1                
+			             8:33     1   1.9G  0   part  </FONT>
+			</P>
+			<P>  └─<FONT SIZE=3 STYLE="font-size: 13pt">vg_luks-lv_luks   
+			     253:7   0    1.9G  0  lvm   </FONT>
+			</P>
+			<P>    └─<FONT SIZE=3 STYLE="font-size: 13pt">secret          
+			             253:8   0   1.9G  0   crypt </FONT>
+			</P>
+			<P>...</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Također sad možemo
+vidjeti I  “secret”  enkriptirano volume mapping sa naredbom:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>#  ls -l /dev/mapper/secret</P>
+			<P><BR>
+			</P>
+			<P>lrwxrwxrwx. 1 root root 7 Sep 21 19:03 /dev/mapper/secret -&gt;
+			../dm-8</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sljedeći korak je kreiranje file system. Prije zapistvanja na
+disku/particiji moramo kreirati file-system. U našem slučaju
+kreirat ćemo “xfs” file-system. 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">U uvodu smo već
+rekli da LUKS koristi mapper kernel podsustava .</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mkfs.xfs /dev/mapper/secret</P>
+			<P><BR>
+			</P>
+			<P>meta-data=/dev/mapper/secret     isize=512    agcount=4,
+			agsize=120320 blks</P>
+			<P>         =                       sectsz=512   attr=2,
+			projid32bit=1</P>
+			<P>         =                       crc=1        finobt=1,
+			sparse=1, rmapbt=0</P>
+			<P>         =                       reflink=1</P>
+			<P>data     =                       bsize=4096   blocks=481280,
+			imaxpct=25</P>
+			<P>         =                       sunit=0      swidth=0 blks</P>
+			<P>naming   =version 2              bsize=4096   ascii-ci=0,
+			ftype=1</P>
+			<P>log      =internal log           bsize=4096   blocks=2560,
+			version=2</P>
+			<P>         =                       sectsz=512   sunit=0 blks,
+			lazy-count=1</P>
+			<P>realtime =none                   extsz=4096   blocks=0,
+			rtextents=0</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Na isti način se
+može kreirati I na primjer “ext4” file-system.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Kreiramo mount
+direktorij. Na primjer u /mnt/secret</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mkdir /mnt/secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad pokrećemo mount naredbu:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mount -v /dev/mapper/secret /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P>mount: /mnt/secret does not contain SELinux labels.</P>
+			<P>       You just mounted an file system that supports labels
+			which does not</P>
+			<P>       contain labels, onto an SELinux box. It is likely that
+			confined</P>
+			<P>       applications will generate AVC messages and not be
+			allowed access to</P>
+			<P>       this file system.  For more details see restorecon(8)
+			and mount(8).</P>
+			<P>mount: /dev/mapper/secret mounted on /mnt/secret.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%">Ovdje imamo neke
+poruke od SELinux <SPAN STYLE="text-decoration: none">a, koji nam
+pokazuje da novo-kreirani direktorij /mnt/secret nema ispravan
+SELinux context.</SPAN></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+Obnavljamo SELinux context sa naredbom:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># restorecon -vvRF /mnt</P>
+			<P><BR>
+			</P>
+			<P>Relabeled /mnt/secret from system_u:object_r:unlabeled_t:s0 to
+			system_u:object_r:mnt_t:s0</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+I sad ponovo mount tj. remount:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@peric ~]# mount -v -o  remount /dev/mapper/secret
+			/mnt/secret</P>
+			<P>mount: /dev/mapper/secret mounted on /mnt/secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+Provjeravamo sa “lsblk” naredbom</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>sdc                                     8:32     1   1.9G  0  
+			disk  
+			</P>
+			<P>└─sdc1                              8:33    1   1.9G  0   
+			part  
+			</P>
+			<P>  └─vg_luks-lv_luks         253:7   0   1.9G  0   lvm   
+			</P>
+			<P>    └─secret                        253:8  0   1.9G  0  
+			crypt /mnt/secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+Vidimo da je naredba uspješna.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+Sad možemo I vidjeti neke informacije o kreiranom LUKS -u, kao što
+je LUKS  header informacije:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksDump /dev/vg_luks/lv_luks</P>
+			<P><BR>
+			</P>
+			<P>LUKS header information</P>
+			<P>Version:       	2</P>
+			<P>Epoch:         	3</P>
+			<P>Metadata area: 	16384 [bytes]</P>
+			<P>Keyslots area: 	16744448 [bytes]</P>
+			<P>UUID:          	89ba8af5-6ad6-4b71-b65f-80d0bd57495f</P>
+			<P>Label:         	(no label)</P>
+			<P>Subsystem:     	(no subsystem)</P>
+			<P>Flags:       	(no flags)</P>
+			<P><BR>
+			</P>
+			<P>Data segments:</P>
+			<P>  0: crypt</P>
+			<P>	offset: 16777216 [bytes]</P>
+			<P>	length: (whole device)</P>
+			<P>	cipher: aes-xts-plain64</P>
+			<P>	sector: 512 [bytes]</P>
+			<P><BR>
+			</P>
+			<P>Keyslots:</P>
+			<P>  0: luks2</P>
+			<P>	Key:        512 bits</P>
+			<P>	Priority:   normal</P>
+			<P>	Cipher:     aes-xts-plain64</P>
+			<P>	Cipher key: 512 bits</P>
+			<P>	PBKDF:      argon2i</P>
+			<P>	Time cost:  4</P>
+			<P>	Memory:     1048576</P>
+			<P>	Threads:    4</P>
+			<P>	Salt:       4a 4b 83 55 f7 fe 3b 7b 40 6d e6 ff 6c d0 88 a1 
+			</P>
+			<P>	            4e 5e fc 18 98 ac 3e 7d ac 82 8d de 9f 00 90 24 
+			</P>
+			<P>	AF stripes: 4000</P>
+			<P>	AF hash:    sha256</P>
+			<P>	Area offset:32768 [bytes]</P>
+			<P>	Area length:258048 [bytes]</P>
+			<P>	Digest ID:  0</P>
+			<P>Tokens:</P>
+			<P>Digests:</P>
+			<P>  0: pbkdf2</P>
+			<P>	Hash:       sha256</P>
+			<P>	Iterations: 81715</P>
+			<P>	Salt:       8f 2d 9c a7 7f d2 22 a1 0a 5b 43 0c 6f ca 85 28 
+			</P>
+			<P>	            86 78 0e 0f f6 f3 fc d1 a7 2c 04 9b 0f 49 98 eb 
+			</P>
+			<P>	Digest:     a8 81 90 a2 f6 d0 ed 03 ca 47 9d 4a c8 93 26 b7 
+			</P>
+			<P>	            09 cf ba 5e c6 f5 d0 ad 78 19 f2 47 fa 89 7d 28 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+Uz ove informacije primjećujemo da samo zauzeli samo prvi key slot 0</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="krei_luks_part.html">Prethodna</a> | <a href="krei_luks_klj_1.html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>
