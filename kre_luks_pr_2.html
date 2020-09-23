@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200923;122253450640391">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+
+	<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380">
+
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>3.3. </B><B>
+Kreiranje LUKS particije – </B><B>Primjer</B><B> 2</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+U ovome dijelu kreirat ćemo LUKS enkriptirani file system ali nećemo
+imati zapis u file – u:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; line-height: 100%"><B>/etc/crypttab</B></P>
+	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	</P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	Nećemo imati file koji će sadržavati ključeva (<B>/etc/luks-keya)</B></P>
+	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	</P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	Nećemo imati zapis o LUKS particiji  u file – u <B>/etc/fstab</B></P>
+	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	</P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	Kreirana LUKS particija će se nakon reboot – a ručno mountati I 
+	ručno će se unosit  passphrase 
+	</P>
+</UL>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Već imamo instaliran cryptsetup-luks paket I već smo provjerili da
+nam je LUKS modul aktivan.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Prikaz našeg USB – a.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>sdc                           8:32   1   1.9G  0 disk  
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreiramo particiju /dev/sdc1 tipa Linux (ovdje nećemo koristiti LVM)
+na našem USB – u , veličine oko 1024 MiB.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Prikaz našeg USB – a.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>sdc                                8:32   1     1.9G  0 disk  
+			</P>
+			<P>└─sdc1                        8:33   1     1G      0 part  
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Postavljamo particiju u LUKS format. Ovdje kreiramo LUKS type 2,
+(defaultna naredba za kreiranje na CentOS 8).</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P STYLE="text-decoration: none"># cryptsetup luksFormat /dev/sdc1</P>
+			<P STYLE="text-decoration: none"><BR>
+			</P>
+			<P STYLE="text-decoration: none">WARNING!</P>
+			<P STYLE="text-decoration: none">========</P>
+			<P STYLE="text-decoration: none">This will overwrite data on
+			/dev/sdc1 irrevocably.</P>
+			<P STYLE="text-decoration: none"><BR>
+			</P>
+			<P STYLE="text-decoration: none">Are you sure? (Type uppercase
+			yes): YES</P>
+			<P STYLE="text-decoration: none">Enter passphrase for /dev/sdc1:
+			<B>Unesite zaporku ovdje - </B><B>Enter</B></P>
+			<P STYLE="text-decoration: none">Verify passphrase: <B>Ponovite
+			zaporku ovdje - </B><B>Enter</B></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreiramo LUKS ime: secret  I otključavamo enkriptiranu particiju</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksOpen /dev/sdc1 secret</P>
+			<P><BR>
+			</P>
+			<P>Enter passphrase for /dev/sdc: <B>Unesite zaporku ovdje - Enter</B></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreiramo file system sa novo – kreiranom particijom. Ovaj put
+kreiramo ext4 file system</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mkfs.ext4 /dev/mapper/secret</P>
+			<P><BR>
+			</P>
+			<P>mke2fs 1.45.4 (23-Sep-2019)</P>
+			<P>Creating filesystem with 258048 4k blocks and 64512 inodes</P>
+			<P>Filesystem UUID: e097ce8a-58e7-4e7c-ba2a-ae0c3c5fe866</P>
+			<P>Superblock backups stored on blocks: 
+			</P>
+			<P>	32768, 98304, 163840, 229376</P>
+			<P><BR>
+			</P>
+			<P>Allocating group tables: done                            
+			</P>
+			<P>Writing inode tables: done                            
+			</P>
+			<P>Creating journal (4096 blocks): done</P>
+			<P>Writing superblocks and filesystem accounting information: done</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad možemo provjeriti status novo kreirane LUKS particije sa
+naredbom:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup status /dev/mapper/secret</P>
+			<P>/dev/mapper/secret is active.</P>
+			<P>  <B>type:    LUKS2</B></P>
+			<P>  cipher:  aes-xts-plain64</P>
+			<P>  keysize: 512 bits</P>
+			<P>  key location: keyring</P>
+			<P>  device:  /dev/sdc1</P>
+			<P>  sector size:  512</P>
+			<P>  offset:  32768 sectors</P>
+			<P>  size:    2064384 sectors</P>
+			<P>  mode:    read/write 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad možemo ručno mount LUKS particiju. Mountamo u direktorij koji
+smo kreirali ranije /mnt/secret</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I mountamo :</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mount -v /dev/mapper/secret /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P>mount: /mnt/secret does not contain SELinux labels.</P>
+			<P>       You just mounted an file system that supports labels
+			which does not</P>
+			<P>       contain labels, onto an SELinux box. It is likely that
+			confined</P>
+			<P>       applications will generate AVC messages and not be
+			allowed access to</P>
+			<P>       this file system.  For more details see restorecon(8)
+			and mount(8).</P>
+			<P>mount: /dev/mapper/secret mounted on /mnt/secret.</P>
+			<P><BR>
+			</P>
+			<P># restorecon -vvRF /mnt/secret</P>
+			<P>Relabeled /mnt/secret from system_u:object_r:unlabeled_t:s0 to
+			system_u:object_r:mnt_t:s0</P>
+			<P><BR>
+			</P>
+			<P># mount -v -o remount /dev/mapper/secret /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P>mount: /dev/mapper/secret mounted on /mnt/secret.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad je naša /dev/mapper/secret  LUKS particija mountana. 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad ako  reboot naš  sustav, naša enkriptirana particija se neće
+automatski mountat pri boot – u, I naredba :</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mount /dev/mapper/secret /mnt/secret</P>
+			<P><BR>
+			</P>
+			<P>mount: /mnt/secret: special device /dev/mapper/secret does not
+			exist.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+neće raditi. 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Za ponovno mountanje radimo sljedeće:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># cryptsetup luksOpen /dev/sdc1 secret</P>
+			<P><BR>
+			</P>
+			<P>Enter passphrase for /dev/sdc1: <B>Unesite zaporku ovdje -
+			Enter</B></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I tek sad možemo pokrenuti naredbu:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P># mount /dev/mapper/secret /mnt/secret</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I sad je LUKS particija opet dostupna.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="bri_luks_par.html">Prethodna</a> | <a href="kre_luks_pr_3.html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>
