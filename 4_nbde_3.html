@@ -5,7 +5,7 @@
 	<TITLE></TITLE>
 	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
 	<META NAME="CREATED" CONTENT="20200921;143416960926316">
-	<META NAME="CHANGED" CONTENT="20200923;130615149222870">
+	<META NAME="CHANGED" CONTENT="20200924;190802288848535">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { size: 8.5in 11in; margin: 0.79in }
@@ -23,44 +23,32 @@
 
 	<hr style="color:#ffb380">
 <center><p><a href="index.html">Početna</a></center> 
-<hr style="color:#ffb380">
+<hr style="color:#ffb380"
 <BODY LANG="en-US" DIR="LTR">
-<P STYLE="margin-bottom: 0in; line-height: 100%"><B>3.4.  Kreiranje
-LUKS Particije – Primjer 3 </B>
-</P>
-<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-U ovome dijelu kreirat ćemo:</P>
-<UL>
-	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	</P>
-	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	particiju na USB tipa Linux, veličine 1024M</P>
-</UL>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-</P>
-<UL>
-	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	nećemo imati file koji sadrži ključeve – /etc/luks-keys/</P>
-	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	</P>
-	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	Imat ćemo zapis u /etc/crypttab/</P>
-	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	</P>
-	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-	I svaki put kad se sustav reboot – ručno će se unosti passphrase
-	pri pokretanju boot menu</P>
-</UL>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>4.2. Kreiranje
+LUKS Particije</B></P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ovdje zbog jednostavnijeg shvaćanja, kreirat ćemo LUKS particiju od
+samog početka I onda nastavljamo sa NBDE dijelom.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Prikaz našeg USB – a.</P>
+Kao što znamo imamo disk /dev/vdb na našem klijentu. Ovdje nećemo
+kreirati LVM, već samo particiju tipa Linux.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreiramo particiju tipa Linux – iskoristimo cijelu – 2G</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Prikaz:</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -68,8 +56,9 @@ Prikaz našeg USB – a.</P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>sdc                           8:32   1   1.9G  0 disk 
+			<P>vdb                           252:16   0    2G  0 disk 
 			</P>
+			<P>└─vdb1                   252:17    0    2G  0 part</P>
 		</TD>
 	</TR>
 </TABLE>
@@ -77,13 +66,13 @@ Prikaz našeg USB – a.</P>
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Na našem USB – u , kreiramo particiju /dev/sdc1. Tip Linux,
-veličine 1024 MiB</P>
+ Kao što smo rekli ovaj dio odrađujemo od samog početka, pa zato
+instaliramo potrebne pakete na Client.</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Prikaz našeg USB – a.</P>
+Instaliramo potrebne pakete:</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -91,10 +80,7 @@ Prikaz našeg USB – a.</P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>sdc                                8:32   1     1.9G  0 disk  
-			</P>
-			<P>└─sdc1                        8:33   1     1G  0 part 
-			</P>
+			<P>[root@node16 ~]# yum -y install cryptsetup</P>
 		</TD>
 	</TR>
 </TABLE>
@@ -102,7 +88,7 @@ Prikaz našeg USB – a.</P>
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Kreiramo LUKS particiju, koja će biti tipa1.</P>
+Aktiviramo LUKS modul</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -110,20 +96,67 @@ Kreiramo LUKS particiju, koja će biti tipa1.</P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># cryptsetup -y -v --type luks1 luksFormat /dev/sdc1</P>
+			<P>[root@node16 ~]# modprobe dm_crypt</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Provjera.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# lsmod | grep dm_crypt</P>
+			<P><FONT COLOR="#ce181e">dm_crypt </FONT>              27346  0 
+			</P>
+			<P>dm_mod                124501  24 dm_log,dm_mirror,<FONT COLOR="#ce181e">dm_crypt</FONT></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreiramo LUKS particiju  (tipa 1) kao u dijelu: <B>3.4. Kreiranje
+LUKS Particije – Primjer 3.</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Dakle, ova particija neće sadržavati file koji ima ključ,  imati
+će zapis u etc/crypttab &amp;  /etc/fstab, I svaki put kad se sustav
+reboot, unosi se zaporka nakon boot izbornika.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreiramo LUKS particiju.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# cryptsetup -y -v --type luks1 luksFormat
+			/dev/vdb1</P>
 			<P><BR>
 			</P>
 			<P>WARNING!</P>
 			<P>========</P>
-			<P>This will overwrite data on /dev/sdc1 irrevocably.</P>
+			<P>This will overwrite data on /dev/vdb1 irrevocably.</P>
 			<P><BR>
 			</P>
 			<P>Are you sure? (Type uppercase yes): <B>YES</B></P>
-			<P>Enter passphrase for /dev/sdc1: <B>Unesite zaporku ovdje -
-			Enter</B><B> </B>
-			</P>
+			<P>Enter passphrase for /dev/vdb1: <B>Unesite zaporku ovdje -
+			Enter</B></P>
 			<P>Verify passphrase: <B>Ponovite zaporku ovdje - Enter</B></P>
-			<P>Key slot 0 created.</P>
 			<P>Command successful.</P>
 		</TD>
 	</TR>
@@ -132,7 +165,7 @@ Kreiramo LUKS particiju, koja će biti tipa1.</P>
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Otvaramo LUKS Particiju I postavljamo ime kao I prije “secret”.</P>
+Otvaramo LUKS particiju I postavljamo ime (malo za promjenu) “tajna”.</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -140,11 +173,9 @@ Otvaramo LUKS Particiju I postavljamo ime kao I prije “secret”.</P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># cryptsetup luksOpen /dev/sdc1 secret</P>
-			<P> 
-			</P>
-			<P>Enter passphrase for /dev/sdc1: 
-			</P>
+			<P>[root@node16 ~]# cryptsetup luksOpen /dev/vdb1 tajna</P>
+			<P>Enter passphrase for /dev/vdb1:<B> </B><B>Unesite zaporku ovdje
+			- Enter</B></P>
 		</TD>
 	</TR>
 </TABLE>
@@ -152,7 +183,7 @@ Otvaramo LUKS Particiju I postavljamo ime kao I prije “secret”.</P>
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Kreiramo file-system. Ovaj put izabiremo xfs file system.</P>
+Kreiramo file – system , možemo izabrati xfs file – system</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -160,22 +191,19 @@ Kreiramo file-system. Ovaj put izabiremo xfs file system.</P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># mkfs.xfs /dev/mapper/secret</P>
-			<P><BR>
-			</P>
-			<P>meta-data=/dev/mapper/secret     isize=512    agcount=4,
-			agsize=65408 blks</P>
+			<P>[root@node16 ~]# mkfs.xfs /dev/mapper/tajna</P>
+			<P>meta-data=/dev/mapper/tajna      isize=512    agcount=4,
+			agsize=130880 blks</P>
 			<P>         =                       sectsz=512   attr=2,
 			projid32bit=1</P>
-			<P>         =                       crc=1        finobt=1,
-			sparse=1, rmapbt=0</P>
-			<P>         =                       reflink=1</P>
-			<P>data     =                       bsize=4096   blocks=261632,
+			<P>         =                       crc=1        finobt=0,
+			sparse=0</P>
+			<P>data     =                       bsize=4096   blocks=523520,
 			imaxpct=25</P>
 			<P>         =                       sunit=0      swidth=0 blks</P>
-			<P>naming   =version 2              bsize=4096   ascii-ci=0,
+			<P>naming   =version 2              bsize=4096   ascii-ci=0
 			ftype=1</P>
-			<P>log      =internal log           bsize=4096   blocks=1566,
+			<P>log      =internal log           bsize=4096   blocks=2560,
 			version=2</P>
 			<P>         =                       sectsz=512   sunit=0 blks,
 			lazy-count=1</P>
@@ -188,10 +216,7 @@ Kreiramo file-system. Ovaj put izabiremo xfs file system.</P>
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Provjera statusa:</P>
+Provjera status “tajna”</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -199,18 +224,16 @@ Provjera statusa:</P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># cryptsetup status secret</P>
-			<P><BR>
-			</P>
-			<P>/dev/mapper/secret is active.</P>
-			<P>  <B>type:    LUKS1</B></P>
+			<P>[root@node16 ~]# cryptsetup status tajna</P>
+			<P>/dev/mapper/tajna is active.</P>
+			<P>  type:    LUKS1</P>
 			<P>  cipher:  aes-xts-plain64</P>
-			<P>  keysize: 512 bits</P>
+			<P>  keysize: 256 bits</P>
 			<P>  key location: dm-crypt</P>
-			<P>  device:  /dev/sdc1</P>
+			<P>  device:  /dev/vdb1</P>
 			<P>  sector size:  512</P>
 			<P>  offset:  4096 sectors</P>
-			<P>  size:    2093056 sectors</P>
+			<P>  size:    4188160 sectors</P>
 			<P>  mode:    read/write</P>
 		</TD>
 	</TR>
@@ -219,12 +242,8 @@ Provjera statusa:</P>
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Uređujemo file <B>/etc/crypttab</B></P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Nalazimo UUID od particije <B>/dev/sdc1</B></P>
+Uređujemo file /etc/crypttab – Pronalazimo UUID od particije
+/dev/vdb1</P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
@@ -232,122 +251,87 @@ Nalazimo UUID od particije <B>/dev/sdc1</B></P>
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>[root@peric ~]# blkid /dev/sdc1</P>
-			<P>/dev/sdc1: <B>UUID=&quot;cb63582b-4442-4a90-9aa6-2bf44c22d119&quot;</B>
-			TYPE=&quot;crypto_LUKS&quot; PARTUUID=&quot;912c0800-01&quot;</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Uređujemo file <B>/</B><B>etc/crypttab</B>: 
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># vim /etc/crypttab</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Sa sadržajem koji može biti :</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>secret UUID=cb63582b-4442-4a90-9aa6-2bf44c22d119 none</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-ili</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>secret UUID=cb63582b-4442-4a90-9aa6-2bf44c22d119 none luks ←
-			preporuka</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Ili možemo unijeti ovako:</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>secret /dev/sdc1 none</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>secret dev/sdc1 none luks</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Izmjena  <B>/</B><B>etc/</B><B>fstab </B>file – a, gdje  dodajemo:</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>/dev/mapper/secret /mnt/secret xfs defaults 0 0</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Već imamo kreirani direktorij gdje učitamo LUKS particiju:
-/mnt/secret</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># mount -v /dev/mapper/secret /mnt/secret</P>
-			<P><BR>
+			<P>[root@node16 ~]# blkid /dev/vdb1</P>
+			<P>/dev/vdb1: <B>UUID=&quot;5d39f837-ff12-4a66-9932-bb94705d3724&quot;
+			</B>TYPE=&quot;crypto_LUKS&quot; 
 			</P>
-			<P>mount: /mnt/secret does not contain SELinux labels.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# vim /etc/crypttab</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sa sadržajem:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>tajna  UUID=5d39f837-ff12-4a66-9932-bb94705d3724 none luks</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Izmjena file /etc/fstab</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>/dev/mapper/tajna /mnt/tajna xfs defaults 1 2</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kreirao direktorij za mount 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# mkdir /mnt/tajna</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Mount</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# mount -v /dev/mapper/tajna /mnt/tajna</P>
+			<P>mount: /mnt/tajna does not contain SELinux labels.</P>
 			<P>       You just mounted an file system that supports labels
 			which does not</P>
 			<P>       contain labels, onto an SELinux box. It is likely that
@@ -356,24 +340,15 @@ Već imamo kreirani direktorij gdje učitamo LUKS particiju:
 			allowed access to</P>
 			<P>       this file system.  For more details see restorecon(8)
 			and mount(8).</P>
-			<P>mount: /dev/mapper/secret mounted on /mnt/secret.</P>
-			<P><BR>
-			</P>
-			<P># restorecon -vvRF /mnt/secret</P>
-			<P>Relabeled /mnt/secret from system_u:object_r:unlabeled_t:s0 to
-			system_u:object_r:mnt_t:s0</P>
-			<P><BR>
-			</P>
-			<P># mount -v -o remount /dev/mapper/secret /mnt/secret</P>
-			<P>mount: /dev/mapper/secret mounted on /mnt/secret.</P>
+			<P>mount: /dev/mapper/tajna mounted on /mnt/tajna.</P>
 		</TD>
 	</TR>
 </TABLE>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
+ 
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Preporučena naredba pri izmjeni /etc/fstab file – a. 
+SELinux 
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
@@ -382,11 +357,52 @@ Preporučena naredba pri izmjeni /etc/fstab file – a.
 	<COL WIDTH=256*>
 	<TR>
 		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P># mount -av</P>
+			<P>[root@node16 ~]# restorecon -vvRF /mnt/tajna</P>
+			<P>restorecon reset /mnt/tajna context
+			system_u:object_r:unlabeled_t:s0-&gt;system_u:object_r:mnt_t:s0</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Remount</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# mount -v -o remount /dev/mapper/tajna
+			/mnt/tajna</P>
+			<P>mount: /dev/mapper/tajna mounted on /mnt/tajna.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Preporučana naredba</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# mount -av</P>
 			<P>/                        : ignored</P>
 			<P>/boot                    : already mounted</P>
+			<P>/tmp                     : already mounted</P>
+			<P>/var                     : already mounted</P>
+			<P>/var/log                 : already mounted</P>
+			<P>/var/log/audit           : already mounted</P>
+			<P>/var/tmp                 : already mounted</P>
 			<P>swap                     : ignored</P>
-			<P>/mnt/secret              : already mounted</P>
+			<P>/mnt/tajna               : already mounted</P>
 		</TD>
 	</TR>
 </TABLE>
@@ -394,36 +410,13 @@ Preporučena naredba pri izmjeni /etc/fstab file – a.
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-I sad možem reboot sustav, I kod boot menu – a (malo poslje),
-prikazat će nam se poruka gdje će nas pitati da unesemo passpharse
-za /secret. Kad je unesemo sustav se normalno pokreće.</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
 <BR>
 </P>
 <P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Dodatno:</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-Ovdje možemo I na ovaj način uredit /etc/fstab file</P>
-<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
-<BR>
-</P>
-<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
-	<COL WIDTH=256*>
-	<TR>
-		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
-			<P>/dev/mapper/secret /secret xfs defaults 1 2 
-			</P>
-		</TD>
-	</TR>
-</TABLE>
-<P STYLE="margin-bottom: 0in; line-height: 100%; text-decoration: none">
-<BR>
-</P>
+Sad nakon reboot sustava očekiva se sunos zaporke I potpuno dizanje
+sustava.</P>
 </BODY>
 <hr style="color:#ffb380">
-<center><p><a href="kre_luks_pr_2.html">Prethodna</a> | <a href="4_nbde_1.html">Sljedeća</a></center> 
+<center><p><a href="4_nbde_2.html">Prethodna</a> | <a href="4_nbde_4.html">Sljedeća</a></center> 
 <hr style="color:#ffb380">
 </HTML>

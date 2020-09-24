@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200924;190240048699260">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+	<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380"
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>4.1. Svojstva
+radnih stanica</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+U ovome dijelu koristiti ćemo dvije VM  - CentOS 7:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<B>CLIENT</B> – Radna stanica koja će sadržavati enkriptirani
+disk / particiju.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<B>SERVER </B>– Radna stanica koja će sadržavati ključeve
+potrebna za otključavanje enkriptirane paritcije / diska na CLIENT –
+u.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+CLIENT:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=665 CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=165>
+	<COL WIDTH=482>
+	<TR VALIGN=TOP>
+		<TD WIDTH=165 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P ALIGN=CENTER>hostname</P>
+		</TD>
+		<TD WIDTH=482 STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P ALIGN=CENTER>node16.caksonic.com</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=165 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P ALIGN=CENTER>IP Address</P>
+		</TD>
+		<TD WIDTH=482 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<P ALIGN=CENTER>192.168.2.226</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Na radnu stanicu dodajemo jedan disk veličine oko 2G.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Prikaz diska:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>vdb                      252:16   0    2G  0 disk 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+ 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+SERVER:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=665 CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=165>
+	<COL WIDTH=482>
+	<TR VALIGN=TOP>
+		<TD WIDTH=165 STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P ALIGN=CENTER>hostname</P>
+		</TD>
+		<TD WIDTH=482 STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P ALIGN=CENTER>node18.caksonic.com</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=165 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P ALIGN=CENTER>IP Address</P>
+		</TD>
+		<TD WIDTH=482 STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<P ALIGN=CENTER>192.168.2.228</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%; text-decoration: none">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="4_nbde_1.html">Prethodna</a> | <a href="4_nbde_3.html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>

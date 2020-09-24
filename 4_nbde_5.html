@@ -1,0 +1,521 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200924;191917379773644">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+	<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380"
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>4.4. CLAVIS -
+Client side </B>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Već imamo kreiran LUKS na /dev/vdb1 I prvo ako je mountan odmount.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>umount /dev/mapper/tajna</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Zatim ga ponovo učitamo</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>mount /dev/maper/tajna</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Izmjenjujemo potrebne file – e.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Izmjena file – a :</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	/etc/crypttab</P>
+	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	</P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	/etc/fstab</P>
+</UL>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+u file – u : /etc/crypttab mijenjamo u sljedeće:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>tajna /dev/vdb1  none _netdev</P>
+			<P><BR>
+			</P>
+			<P>ili</P>
+			<P><BR>
+			</P>
+			<P>tajna  UUID=5d39f837-ff12-4a66-9932-bb94705d3724 none _netdev
+			luks</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Dodajemo <B>_netdev</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+u file – u :etc/fstab mijenjamo u :</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>/dev/mapper/tajna /mnt/tajna xfs _netdev 1 2</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Brišemo <B>defaults </B>I dodajemo <B>_netdev</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Instalacija potrebnih paketa:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>yum -y install clevis clevis-luks clevis-dracut</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Nakon instalacije provjera se konekcije sa TANG serverom.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Primjer ako koristimo defaultni port 80/tcp – nije naš primjer al
+da ga imamo</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@client3 ~]# curl -f http://192.168.2.201/adv &gt;
+			adv1.jws</P>
+			<P>  % Total    % Received % Xferd  Average Speed   Time    Time  
+			  Time  Current</P>
+			<P>                                 Dload  Upload   Total   Spent 
+			  Left  Speed</P>
+			<P>100   956  100   956    0     0  29946      0 --:--:-- --:--:--
+			--:--:-- 31866</P>
+			<P>[root@client3 ~]# 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ako smo mjenjali port – naš primjer:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# curl -f http://192.168.2.228:8089/adv &gt;
+			adv1.jws</P>
+			<P>  % Total    % Received % Xferd  Average Speed   Time    Time  
+			  Time  Current</P>
+			<P>                                 Dload  Upload   Total   Spent 
+			  Left  Speed</P>
+			<P>100   956  100   956    0     0  54516      0 --:--:-- --:--:--
+			--:--:-- 59750</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Vidimo da smo se uspješno spojili sa serverom</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Pokrećemo naredbu koja nam pokaziva trenuti dump  - koliko smo
+slotova zauzeli</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# cryptsetup luksDump /dev/vdb1 
+			</P>
+			<P>LUKS header information for /dev/vdb1</P>
+			<P><BR>
+			</P>
+			<P>Version:       	1</P>
+			<P>Cipher name:   	aes</P>
+			<P>Cipher mode:   	xts-plain64</P>
+			<P>Hash spec:     	sha256</P>
+			<P>Payload offset:	4096</P>
+			<P>MK bits:       	256</P>
+			<P>MK digest:     	0d 88 76 b3 42 88 9a 44 08 b6 43 c0 ad 33 e4 b5
+			06 c4 da 29 
+			</P>
+			<P>MK salt:       	7d ca 39 78 02 a3 07 52 6e b8 5b 70 41 45 66 fc
+						</P>
+			<P>               	4a 10 57 9d bf 67 a3 8b 0b ab 61 8b 52 0f 23 d4
+						</P>
+			<P>MK iterations: 	29049</P>
+			<P>UUID:          	5d39f837-ff12-4a66-9932-bb94705d3724</P>
+			<P><BR>
+			</P>
+			<P>Key Slot 0: ENABLED</P>
+			<P>	Iterations:         	458292</P>
+			<P>	Salt:               	86 ae 37 dc f3 72 1e 25 ad 00 9a 61 3a 50
+			13 a7 
+			</P>
+			<P>	                      	e0 93 d0 67 0e db 18 bd bf 85 a7 60 f1
+			eb 1a c4 
+			</P>
+			<P>	Key material offset:	8</P>
+			<P>	AF stripes:            	4000</P>
+			<P>Key Slot 1: DISABLED</P>
+			<P>Key Slot 2: DISABLED</P>
+			<P>Key Slot 3: DISABLED</P>
+			<P>Key Slot 4: DISABLED</P>
+			<P>Key Slot 5: DISABLED</P>
+			<P>Key Slot 6: DISABLED</P>
+			<P>Key Slot 7: DISABLED</P>
+			<P>[root@node16 ~]# 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Iz naredbe vidimo da je samo jedan key slot zauzet, onaj kojim sko
+kreirali zaporku.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad ćemo povezati naš client sa serverom  da koristi I kopira
+ključ/e na client , na način:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# clevis bind luks -d /dev/vdb1 tang
+			'{&quot;url&quot;:&quot;<A HREF="http://192.168.2.228:8089/">http://192.168.2.228:8089</A>&quot;}'</P>
+			<P><BR>
+			</P>
+			<P>The advertisement contains the following signing keys:</P>
+			<P><BR>
+			</P>
+			<P>7ygE46lNq1MzAwDS5iHj9ZZfEWQ</P>
+			<P><BR>
+			</P>
+			<P>Do you wish to trust these keys? [ynYN] <B>y</B></P>
+			<P>You are about to initialize a LUKS device for metadata storage.</P>
+			<P>Attempting to initialize it may result in data loss if data was</P>
+			<P>already written into the LUKS header gap in a different format.</P>
+			<P>A backup is advised before initialization is performed.</P>
+			<P><BR>
+			</P>
+			<P>Do you wish to initialize /dev/vdb1? [yn] <B>y</B></P>
+			<P>Enter existing LUKS password:<B> </B><B>Unesite zaporku ovdje
+			-Enter</B></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+ZA luks2 type:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>@client ~]# clevis luks bind -d /dev/luks/luks tang
+			'{&quot;url&quot;:&quot;http://192.168.122.3&quot;}'</P>
+		</TD>
+	</TR>
+</TABLE>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>@client~]# clevis luks bind -d /dev/luks/luks tang
+			'{&quot;url&quot;:&quot;http://192.168.122.3:8089&quot;}'</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+NAPOMENA: 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ovdje je naredba za type 1 na CentOS 7:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P><B>clevis bind luks </B>-d /dev/vg_luks/lv_luks tang
+			'{&quot;url&quot;:&quot;http://192.168.2.201&quot;}'</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Promjenjena na CentOS 8 type 2:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P><B>clevis luks bind</B> -d /dev/luks/luks tang
+			'{&quot;url&quot;:&quot;http://192.168.122.3:8089&quot;}'</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Nakon što smo to odradili pokrećemo opet naredbu:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# cryptsetup luksDump /dev/vdb1</P>
+			<P>LUKS header information for /dev/vdb1</P>
+			<P><BR>
+			</P>
+			<P>Version:       	1</P>
+			<P>Cipher name:   	aes</P>
+			<P>Cipher mode:   	xts-plain64</P>
+			<P>Hash spec:     	sha256</P>
+			<P>Payload offset:	4096</P>
+			<P>MK bits:       	256</P>
+			<P>MK digest:     	0d 88 76 b3 42 88 9a 44 08 b6 43 c0 ad 33 e4 b5
+			06 c4 da 29 
+			</P>
+			<P>MK salt:       	7d ca 39 78 02 a3 07 52 6e b8 5b 70 41 45 66 fc
+						</P>
+			<P>               	4a 10 57 9d bf 67 a3 8b 0b ab 61 8b 52 0f 23 d4
+						</P>
+			<P>MK iterations: 	29049</P>
+			<P>UUID:          	5d39f837-ff12-4a66-9932-bb94705d3724</P>
+			<P><BR>
+			</P>
+			<P>Key Slot 0: ENABLED</P>
+			<P>	Iterations:         	458292</P>
+			<P>	Salt:               	86 ae 37 dc f3 72 1e 25 ad 00 9a 61 3a 50
+			13 a7 
+			</P>
+			<P>	                      	e0 93 d0 67 0e db 18 bd bf 85 a7 60 f1
+			eb 1a c4 
+			</P>
+			<P>	Key material offset:	8</P>
+			<P>	AF stripes:            	4000</P>
+			<P><B>Key Slot 1: ENABLED</B></P>
+			<P><B>	Iterations:         	451972</B></P>
+			<P><B>	Salt:               	36 de 27 9b e0 3d 05 87 22 a9 7c 2d f1
+			9f ed 46 </B>
+			</P>
+			<P><B>	                      	a3 e1 16 ca a7 85 e0 70 10 f3 f6 b4
+			e1 57 1d 90 </B>
+			</P>
+			<P><B>	Key material offset:	264</B></P>
+			<P><B>	AF stripes:            	4000</B></P>
+			<P>Key Slot 2: DISABLED</P>
+			<P>Key Slot 3: DISABLED</P>
+			<P>Key Slot 4: DISABLED</P>
+			<P>Key Slot 5: DISABLED</P>
+			<P>Key Slot 6: DISABLED</P>
+			<P>Key Slot 7: DISABLED</P>
+			<P>[root@node16 ~]# 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I sad smo dobili drugi key slot – koji je popunjen:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sad pokrećemo naredbu koja će nam napraviti update prema TANG
+serveru vezano za IP adrese:</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>Za ne root
+particije trebaju još ovu naredbu:</B></P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ova naredba povezuje client sa serverom – tj. Automatizira
+dekripciju na boot – u.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# systemctl enable clevis-luks-askpass.path</P>
+			<P>Created symlink from
+			/etc/systemd/system/remote-fs.target.wants/clevis-luks-askpass.path
+			to /usr/lib/systemd/system/clevis-luks-askpass.path.</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Potvrda da TANG server ima ključeve  I a su registrirani u našem
+LUKS volumenu  sa naredbom:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node16 ~]# luksmeta show -d /dev/vdb1</P>
+			<P>0   active empty</P>
+			<P>1   active cb6e8904-81ff-40da-a84a-07ab9ab5715e</P>
+			<P>2 inactive empty</P>
+			<P>3 inactive empty</P>
+			<P>4 inactive empty</P>
+			<P>5 inactive empty</P>
+			<P>6 inactive empty</P>
+			<P>7 inactive empty</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+NAPOMENA: Ova naredba vrijedi za type1</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I sad možemo reboot client – a.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kad se restartira client, na boot izborniku on se spaja na server I
+automatski povlači ključ I otključava enkriptiranu particiju.</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="4_nbde_4.html">Prethodna</a> | <a href=".html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>

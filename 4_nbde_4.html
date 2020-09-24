@@ -1,0 +1,478 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 4.1.6.2 (Linux)">
+	<META NAME="CREATED" CONTENT="20200921;143416960926316">
+	<META NAME="CHANGED" CONTENT="20200924;191345531139123">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 8.5in 11in; margin: 0.79in }
+		P { margin-bottom: 0.1in; line-height: 115% }
+		TD P { margin-bottom: 0in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+	<h2><center>CaksSonicDeveloper© - Linux</center></h2>
+	<hr style="color:#ffb380">
+	<center>LUKS</center>
+    <center>Linux Unified Key Setup - on - disk - format</center>
+    <br>
+
+	<hr style="color:#ffb380">
+<center><p><a href="index.html">Početna</a></center> 
+<hr style="color:#ffb380"
+<BODY LANG="en-US" DIR="LTR">
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<B>4</B><B>.</B><B>3</B><B>.  </B><B>TANG Server - </B><B>Instalacija
+potrebnih paketa</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+SERVER:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50% STYLE="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P>hostname</P>
+		</TD>
+		<TD WIDTH=50% STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>node18.caksonic.com</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50% STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<P>IP Address</P>
+		</TD>
+		<TD WIDTH=50% STYLE="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<P>192.168.2.228</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Na server strani nemamo instaliran cryptsetup paket, samo instaliramo
+TANG server paket na način:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Na Server – TANG strani instaliramo:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>yum -y install tang</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Omogućivanje TANG server – a</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>systemctl enable tangd.socket --now</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>NAPOMENA:</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+defaultni socket mora biti slobodan – ne smjemo imati neki
+enkriptirani disk/particiju na serveru</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; line-height: 100%"><B>NAPOMENA:</B></P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+TANG server koristi defaultni port 80/tcp, a taj port koristi I HTTP
+Web Server I zbog toga ne smijemo  imati neku aplikaciju koju pokreće
+npr. Apache Web Server.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ako je port 80/tcp slobodan otvaramo u firewall – u:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Otvaramo firewall – TANG server “sluša” na portu 80/tcp</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>firewall-cmd –permanent –add-port=80/tcp</P>
+			<P>firewallcmd --reload</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ako imamo zauzet port 80/tcp vršimo izmjenu TANG file – a, u
+direktoriju: usr/lib/systemd/system/tangd.socket.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Za uspješnu promjenu porta koji koristi TANG server potrebno je
+prilagoditi , naravno ako se koristi SELinux, njegova sigurnosna
+pravila.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Za potpunu kontrolu SELinux pravila potrebni su nam sljedeći paketi:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node18 ~]#  yum install -y policycoreutils-python
+			policycoreutils-devel setroubleshoot-server</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Kad smo uspješno instalirali potrebne pakete, moramo oderditi koji
+port želimo da tangd.socket koristi. Moraju se poštovati dva
+pravila.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	Ne smije biti zauzet od strane nekog servisa.</P>
+	<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	</P>
+	<LI><P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+	Ne smije biti zauzet tj. ne smije se koristiti od strane nekog
+	socketa.</P>
+</UL>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Provjeravamo:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Uzimamo na primjer port 22 (namjerno sam izabrao ovaj port) , I
+provjeravamo da li je zauzet</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node18 ~]# semanage port -l | grep 22</P>
+			<P>freeipmi_port_t                tcp      9225</P>
+			<P>freeipmi_port_t                udp      9225</P>
+			<P>hplip_port_t                   tcp      1782, 2207, 2208, 8290,
+			8292, 9100, 9101, 9102, 9220, 9221, 9222, 9280, 9281, 9282, 9290,
+			9291, 50000, 50002</P>
+			<P>jabber_client_port_t           tcp      5222, 5223</P>
+			<P>mysqlmanagerd_port_t           tcp      2273</P>
+			<P>oa_system_port_t               tcp      8022</P>
+			<P>oa_system_port_t               udp      8022</P>
+			<P>pop_port_t                     tcp      106, 109, 110, 143,
+			220, 993, 995, 1109, 10993</P>
+			<P>ssh_port_t                     tcp      22</P>
+			<P>zented_port_t                  tcp      1229</P>
+			<P>zented_port_t                  udp      1229</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Povratna informacija nam govori da je ovaj port zauzet I koristi se.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Pokušamo ponovo sa portom 8089</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node18 ~]# semanage port -l | grep 8089</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ova naredba nema povratnu informaciju – OK</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Još provjeravamo da li koji socket koristi taj port.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node18 ~]# ss -atn | grep 8089</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+ 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ova naredba nema povratnu informaciju – OK 
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I sad možemo izmjeniti file:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+/usr/lib/systemd/system/tangd.socket</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[Socket]</P>
+			<P>ListenStream=80</P>
+			<P>Accept=true</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+U</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[Socket]</P>
+			<P>ListenStream=8089</P>
+			<P>Accept=true</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Izmjena SELinux postavki za tang</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+imamo instaliran setroubleshoot-server I SELinux je u enforcing modu.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Ovdje će javit error – SELinux ne dopušta spajanje na port 8089
+(http_port_t    je u pitanju)</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Sa naredbom  vidimo error massage:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P> sealert -a /var/log/audit/audit.log</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I mijenjamo SELinux policy sa naredbom:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>semanage port -a -t http_port_t -p tcp 8089 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Potrebno je reload daemon -e.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>systemctl daemon-reload</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+I sad možemo pokrenuti naredbu:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% HEIGHT=20 VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>systemctl enable tangd.socket  - -now</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+ili</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% HEIGHT=38 VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>systemctl enable tangd.socket</P>
+			<P>systemctl start tangd.socket</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Dodajemo novi port u firewall</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>firewall-cmd --permanent --add-port=8089/tcp</P>
+			<P>firewall-cmd --reload 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+TANG server već ima po defaultu kreirane neke ključeve I možemo
+vidjeti koji su :</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+Izlistavanje ključeva koje TANG ima u defaultnoj postavci:</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=256*>
+	<TR>
+		<TD WIDTH=100% VALIGN=TOP STYLE="border: 1px solid #000000; padding: 0.04in">
+			<P>[root@node18 ~]# ls -al /var/db/tang</P>
+			<P>total 8</P>
+			<P>dr-xrws---. 2 tang tang  84 Sep 24 18:20 .</P>
+			<P>drwxr-xr-x. 4 root root  46 Sep 24 18:00 ..</P>
+			<P>-rw-r--r--. 1 root tang 354 Sep 24 18:20
+			7ygE46lNq1MzAwDS5iHj9ZZfEWQ.jwk</P>
+			<P>-rw-r--r--. 1 root tang 349 Sep 24 18:20
+			GrPUQR9IN84YzvqH4cGpc4s6Ew0.jwk</P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+U mome slučaju ovo je povratna informacija. I sa ovim smo završili
+konfiguraciju servera.</P>
+<P STYLE="margin-bottom: 0in; font-weight: normal; line-height: 100%">
+<BR>
+</P>
+</BODY>
+<hr style="color:#ffb380">
+<center><p><a href="4_nbde_3.html">Prethodna</a> | <a href="4_nbde_5.html">Sljedeća</a></center> 
+<hr style="color:#ffb380">
+</HTML>
